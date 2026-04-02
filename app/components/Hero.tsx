@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero = () => {
     return (
-        <section className="relative w-full py-24 border-b-8 border-black overflow-hidden flex items-center justify-center min-h-[500px]">
+        <section className="relative w-full py-24 border-b-8 border-black overflow-hidden flex items-center justify-center min-h-125">
             {/* Background Image Layer */}
             <div
                 className="absolute inset-0 bg-[url('/hero-image.jpg')] bg-cover bg-center bg-no-repeat transition-transform duration-700 hover:scale-105"

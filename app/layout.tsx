@@ -4,7 +4,7 @@ import Header from "@/app/components/Header";
 import React from "react";
 import {Inter, Montserrat} from "next/font/google"
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
 const montserrat = Montserrat({
     subsets: ['latin'],
     variable: '--font-montserrat', // Ovo ti omogućava da ga koristiš u Tailwind-u
