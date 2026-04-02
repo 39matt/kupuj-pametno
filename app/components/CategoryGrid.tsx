@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const categories = [
     { name: 'Bašta i dvorište', discount: '-55%', img: 'https://placehold.co/400x400/f3f4f6/a1a1aa?text=Basta' },
     { name: 'Alati i mašine', discount: '-65%', img: 'https://placehold.co/400x400/f3f4f6/a1a1aa?text=Alati' },
@@ -16,14 +18,14 @@ const CategoryGrid = () => {
     return (
         <div className="grid grid-cols-4 gap-4 p-8 bg-gray-50">
             {categories.map((cat, i) => (
-                <div key={i} className="relative group cursor-pointer">
-                    <div className="absolute top-2 left-2 bg-yellow-400 text-black font-bold rounded-full w-12 h-12 flex items-center justify-center z-10 text-sm border-2 border-white">
+                <div key={i} className="relative group cursor-pointer text-center">
+                    <div className="absolute top-2 left-2 bg-[#FF181A] text-white font-bold rounded-full w-12 h-12 flex items-center justify-center z-10 text-sm border-2 border-white">
                         {cat.discount}
                     </div>
                     <div className="aspect-square bg-white overflow-hidden rounded-lg shadow-sm">
-                        <img src={cat.img} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition" />
+                        <Image src={cat.img} alt={cat.name} width={50} height={50} className="w-full h-full object-cover group-hover:scale-105 transition" />
                     </div>
-                    <p className="text-center mt-2 font-semibold text-gray-700">{cat.name}</p>
+                    <p className="mt-2 font-semibold text-gray-700">{cat.name}</p>
                 </div>
             ))}
         </div>
