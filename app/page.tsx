@@ -2,7 +2,7 @@ import Hero from "@/app/components/Hero";
 import CategoryGrid from "@/app/components/CategoryGrid";
 import ProductCard from "@/app/components/ProductCard";
 import ToolHighlight from "@/app/components/ToolHighlight";
-import Footer from "@/app/components/Footer";
+import Image from "next/image";
 
 
 export default function Home() {
@@ -93,9 +93,9 @@ export default function Home() {
             {articles.map((article, index) => (
                 <div key={index} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col">
                   <div className="aspect-video bg-gray-100 relative">
-                    <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                    <Image src={article.image} alt={article.title} className="w-full h-full object-cover" />
                   </div>
-                  <div className="p-5 flex flex-col flex-grow items-center text-center">
+                  <div className="p-5 flex flex-col grow items-center text-center">
                     <h3 className="font-semibold text-gray-800 mb-4">{article.title}</h3>
                     <button className="mt-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-md text-sm transition-colors">
                       Pročitaj više
@@ -105,8 +105,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        <Footer />
       </main>
   );
 }
