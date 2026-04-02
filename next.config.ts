@@ -6,6 +6,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'placehold.co',
             },
+            {
+                protocol: 'https',
+                hostname: 'lagzruhevrwxthbakmxf.supabase.co',
+            },
         ],
         dangerouslyAllowSVG: true, // Placehold.co returns SVGs
     },

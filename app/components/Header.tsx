@@ -18,7 +18,7 @@ const Header = () => {
                     <button className="md:hidden text-gray-800 hover:text-lime-600 transition">
                         <Menu size={28} />
                     </button>
-                    <Link href="/" className="flex-shrink-0">
+                    <Link href="/" className="shrink-0">
             <span className="text-3xl font-black text-lime-600 tracking-tighter">
               Kupuj<span className="text-yellow-400">Pametno</span>
             </span>
@@ -26,7 +26,7 @@ const Header = () => {
                 </div>
 
                 {/* Search Bar (Desktop) */}
-                <div className="flex-grow hidden md:flex items-center max-w-2xl relative">
+                <div className="grow hidden md:flex items-center max-w-2xl relative">
                     <input
                         type="text"
                         placeholder="Unesite pojam za pretragu..."
@@ -56,7 +56,7 @@ const Header = () => {
             </div>
 
             {/* Desktop Navigation Bar */}
-            <div className="border-t border-b border-gray-100 bg-white hidden md:block shadow-sm">
+            {/*<div className="border-t border-b border-gray-100 bg-white hidden md:block shadow-sm">
                 <div className="max-w-6xl mx-auto px-4 flex items-center h-12">
                     <nav className="flex items-center space-x-8 text-sm font-bold text-gray-800">
                         <Link href="/akcija" className="text-red-600 hover:text-red-700 flex items-center gap-1">
@@ -70,7 +70,7 @@ const Header = () => {
                         <Link href="/blog" className="hover:text-lime-600 transition-colors">Blog</Link>
                     </nav>
                 </div>
-            </div>
+            </div>*/}
 
             {/* Mobile Search (Shows only on small screens) */}
             <div className="md:hidden px-4 pb-4 bg-white">
