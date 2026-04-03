@@ -6,7 +6,6 @@ import AddToCartButton from './AddToCartButton';
 import { IProduct } from "@/app/utils/models/IProduct";
 
 export default function ProductBundle({ productInfo }: { productInfo: IProduct }) {
-    // Definisanje opcija sa uračunatim starim cenama
     const options = [
         {
             id: 1,
