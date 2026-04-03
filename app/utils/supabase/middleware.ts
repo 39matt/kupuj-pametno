@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith('/admin')) {
         console.log("Pokušaj pristupa: ", user?.email);
 
-        const adminEmails = ['luka@gmail.com'];
+        const adminEmails = ['luka@gmail.com', 'adnectmarketing@gmail.com'];
 
         const isAllowed = user && adminEmails.includes(user.email?.toLowerCase() || '');
 
