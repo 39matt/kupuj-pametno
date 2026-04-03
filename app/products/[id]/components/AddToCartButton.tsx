@@ -35,7 +35,7 @@ export default function AddToCartButton({ item, text }: AddToCartButtonProps) {
             ) : (
                 <>
                     <ShoppingCart size={20} className="hidden md:block" />
-                    {text || 'NARUČI ODMAH'}
+                    {text || 'DODAJ U KORPU'}
                 </>
             )}
         </button>

@@ -84,7 +84,7 @@ export default function ProductBundle({ productInfo }: { productInfo: IProduct }
                     quantity: current.quantity,
                     image: productInfo.imageUrls[0] || ""
                 }}
-                text={`NARUČI ODMAH — ${current.price.toLocaleString()} RSD`}
+                text={`DODAJ U KORPU — ${current.price.toLocaleString()} RSD`}
             />
         </div>
     );
