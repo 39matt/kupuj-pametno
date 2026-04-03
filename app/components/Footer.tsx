@@ -11,7 +11,7 @@ const Footer = () => {
                     <div className="flex flex-col space-y-4">
                         <h3 className="text-lg font-bold text-gray-900 mb-2 tracking-wide">Imate pitanja?</h3>
                         <p className="text-gray-700 text-sm">Radnim danima od 08 do 16h</p>
-                        <p className="text-gray-700 text-sm">Telefon: 011/443-1170</p>
+                        {/*<p className="text-gray-700 text-sm">Telefon: 011/443-1170</p>*/}
                         <p className="text-gray-700 text-sm">info@kupujpametno.rs</p>
 
                         <div className="flex items-center space-x-5 pt-2 text-gray-900">
@@ -69,7 +69,7 @@ const Footer = () => {
 
                 <div className="text-center text-[11px] text-gray-500 tracking-wide">
                     <p>
-                        © 2026, KupujPametno - KupujPametno d.o.o - Niš - Srbija - PIB: 112368506  •  Politika privatnosti i kolačići  •  Privacy policy  •  Uslovi korišćenja  •  Contact information
+                        © 2026, KupujPametno - KupujPametno d.o.o - Niš - Srbija  •  Politika privatnosti i kolačići  •  Privacy policy  •  Uslovi korišćenja  •  Contact information
                     </p>
                 </div>
 
