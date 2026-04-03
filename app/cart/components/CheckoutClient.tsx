@@ -7,9 +7,11 @@ import { Plus, Minus, Send, ShoppingBag, Loader2 } from 'lucide-react';
 import { useCartStore } from "@/app/utils/store/useCartStore";
 import { ICartItem } from "@/app/utils/models/CartItem";
 import {createOrder} from "@/app/cart/actions";
+import {useRouter} from "next/navigation";
 
 export default function CheckoutClient() {
     const { items, addItem, removeItem, clearCart } = useCartStore();
+    const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const getDiscountedTotal = (basePrice: number, quantity: number) => {
@@ -39,35 +41,38 @@ export default function CheckoutClient() {
         if (isSubmitting) return;
 
         setIsSubmitting(true);
-        const fd = new FormData(e.currentTarget);
+
+        // Use FormData directly from e.currentTarget
+        const formData = new FormData(e.currentTarget);
 
         const formDataObj = {
-            full_name: fd.get('full_name') as string,
-            phone: fd.get('phone') as string,
-            city: fd.get('city') as string,
-            zip_code: fd.get('zip_code') as string,
-            address: fd.get('address') as string,
-            email: fd.get('email') as string,
-            note: fd.get('note') as string,
+            full_name: formData.get('full_name') as string,
+            phone: formData.get('phone') as string,
+            city: formData.get('city') as string,
+            zip_code: formData.get('zip_code') as string,
+            address: formData.get('address') as string,
+            email: formData.get('email') as string,
+            note: formData.get('note') as string,
         };
 
         try {
-            const result = await createOrder(formDataObj, items, total - shipping);
+            // Ensure total - shipping is passed correctly
+            const result = await createOrder(formDataObj, items, subtotal);
 
             if (result.success) {
                 clearCart();
-                window.location.href = '/hvala';
+                router.push('/hvala');
+                router.refresh();
             } else {
                 alert("Greška: " + result.message);
             }
         } catch (error) {
-            alert("Došlo je do neočekivane greške pri slanju porudžbine.");
-            console.error(error);
+            console.error("Submission error:", error);
+            alert("Došlo je do greške. Proverite internet konekciju i pokušajte ponovo.");
         } finally {
             setIsSubmitting(false);
         }
     };
-
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-start max-w-7xl mx-auto px-4 py-10">
             {/* LEVA STRANA - FORMA */}

@@ -11,28 +11,30 @@ const Header = () => {
                 DOBRODOŠLI U <span className={"text-red-500"}>KUPUJ</span>PAMETNO
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4 md:gap-8">
+            <div className="max-w-6xl mx-auto px-4 py-4 md:py-4 flex items-center justify-between relative min-h-20 md:min-h-auto">
 
-                <div className="flex items-center gap-3">
-                    <button className="md:hidden text-gray-800 hover:text-[#FF181A] transition">
-                        <Menu size={24} />
+                <div className="flex items-center md:hidden z-10">
+                    <button className="text-gray-800 hover:text-[#FF181A] transition">
+                        <Menu size={28} />
                     </button>
-                    <Link href="/" className="relative shrink-0 flex items-center">
+                </div>
 
-                        <div className="relative w-40 h-16 md:w-56 md:h-20">
+                <div className="md:static absolute left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-0">
+                    <Link href="/" className="relative shrink-0 flex items-center">
+                        <div className="relative w-52 h-24 md:w-64 md:h-24">
                             <Image
                                 src="/logo.png"
                                 alt="KupujPametno Logo"
                                 fill
-                                sizes="(max-width: 768px) 160px, 224px"
+                                sizes="(max-width: 768px) 208px, 256px"
                                 priority
-                                className="object-contain object-left"
+                                className="object-contain md:object-left object-center"
                             />
                         </div>
                     </Link>
                 </div>
 
-                <div className="grow hidden md:flex items-center max-w-xl relative">
+                <div className="grow hidden md:flex items-center max-w-xl relative mx-8">
                     <input
                         type="text"
                         placeholder="Šta želite da kupite danas?"
@@ -43,16 +45,14 @@ const Header = () => {
                     </button>
                 </div>
 
-                {/* Action Icons */}
-                <div className="flex items-center space-x-4 md:space-x-7 text-gray-700">
+                <div className="flex items-center text-gray-700 z-10">
                     <Link href="/cart" className="flex flex-col items-center hover:text-[#FF181A] transition-colors relative group">
-                       <CartCounter/>
+                        <CartCounter/>
                         <span className="text-[10px] font-bold uppercase mt-1 hidden md:block tracking-tight">Korpa</span>
                     </Link>
                 </div>
             </div>
 
-            {/* Mobile Search Bar */}
             <div className="md:hidden px-4 pb-4">
                 <div className="relative">
                     <input
