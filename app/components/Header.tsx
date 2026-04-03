@@ -29,6 +29,7 @@ const Header = () => {
                                 src="/logo.png"
                                 alt="KupujPametno Logo"
                                 fill
+                                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                                 priority
                                 className="object-contain object-left"
                             />
