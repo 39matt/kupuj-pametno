@@ -21,7 +21,7 @@ const Header = () => {
 
                 <div className="md:static absolute left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-0">
                     <Link href="/" className="relative shrink-0 flex items-center">
-                        <div className="relative w-52 h-24 md:w-64 md:h-24">
+                        <div className="relative w-40 h-16 md:w-64 md:h-24">
                             <Image
                                 src="/logo.png"
                                 alt="KupujPametno Logo"
