@@ -1,35 +1,30 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Obavezno uvezi Image
-import { Search, ShoppingCart, User, Menu } from 'lucide-react';
+import Image from 'next/image';
+import { Search, Menu } from 'lucide-react';
+import CartCounter from "@/app/components/CartCounter";
 
 const Header = () => {
     return (
         <header className="w-full font-sans bg-white border-b border-gray-100">
-            {/* Top Bar */}
             <div className="bg-black text-white text-[10px] md:text-xs py-2 px-4 text-center tracking-widest font-bold uppercase">
-                DOBRODOŠLI U KUPUJPAMETNO — BESPLATNA DOSTAVA PREKO 5000 RSD!
+                DOBRODOŠLI U <span className={"text-red-500"}>KUPUJ</span>PAMETNO
             </div>
 
-            {/* Main Header Area */}
             <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4 md:gap-8">
 
-                {/* Mobile Menu & Logo */}
                 <div className="flex items-center gap-3">
                     <button className="md:hidden text-gray-800 hover:text-[#FF181A] transition">
                         <Menu size={24} />
                     </button>
                     <Link href="/" className="relative shrink-0 flex items-center">
-                        {/* Logo.png iz public foldera.
-                           Podesio sam visinu na 50px (h-12-ish),
-                           možeš promeniti h-12 u h-14 ako želiš veći logo.
-                        */}
-                        <div className="relative w-32 h-12 md:w-40 md:h-14">
+
+                        <div className="relative w-40 h-16 md:w-56 md:h-20">
                             <Image
                                 src="/logo.png"
                                 alt="KupujPametno Logo"
                                 fill
-                                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                                sizes="(max-width: 768px) 160px, 224px"
                                 priority
                                 className="object-contain object-left"
                             />
@@ -37,7 +32,6 @@ const Header = () => {
                     </Link>
                 </div>
 
-                {/* Search Bar (Desktop) */}
                 <div className="grow hidden md:flex items-center max-w-xl relative">
                     <input
                         type="text"
@@ -51,17 +45,8 @@ const Header = () => {
 
                 {/* Action Icons */}
                 <div className="flex items-center space-x-4 md:space-x-7 text-gray-700">
-                    <Link href="/nalog" className="hidden md:flex flex-col items-center hover:text-[#FF181A] transition-colors group">
-                        <User size={22} className="group-hover:scale-110 transition-transform" />
-                        <span className="text-[10px] font-bold uppercase mt-1 tracking-tight">Nalog</span>
-                    </Link>
-                    <Link href="/korpa" className="flex flex-col items-center hover:text-[#FF181A] transition-colors relative group">
-                        <div className="relative">
-                            <ShoppingCart size={24} className="group-hover:scale-110 transition-transform" />
-                            <span className="absolute -top-2 -right-2 bg-[#FF181A] text-white text-[10px] font-black rounded-full w-4 h-4 flex items-center justify-center border-2 border-white shadow-sm">
-                                0
-                            </span>
-                        </div>
+                    <Link href="/cart" className="flex flex-col items-center hover:text-[#FF181A] transition-colors relative group">
+                       <CartCounter/>
                         <span className="text-[10px] font-bold uppercase mt-1 hidden md:block tracking-tight">Korpa</span>
                     </Link>
                 </div>

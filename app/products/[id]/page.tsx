@@ -66,19 +66,17 @@ export default async function ProductPage({ params }: PageProps) {
                             </div>
                             <div className="flex items-center text-gray-600 text-sm pl-1">
                                 <Truck size={20} className="mr-3 text-gray-400" />
-                                Besplatna dostava za porudžbine preko 5000 RSD
+                                Cena dostave za sve porudžbine je 460 dinara.
                             </div>
                         </div>
 
-                        <ProductBundle basePrice={product.price} />
+                        <ProductBundle
+                            productInfo={product}
+                        />
 
                         <div className="md:hidden mt-6">
                             <TrustUrgency />
                         </div>
-
-                        <button className="bg-[#4CAF50] hover:bg-[#45a049] text-white text-xl font-black py-5 px-8 rounded-2xl transition-all shadow-xl shadow-green-100 active:scale-95 w-full uppercase tracking-wide">
-                            DODAJ U KORPU
-                        </button>
 
                         <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
                             <div className="flex items-center gap-3 text-gray-500 text-xs font-bold uppercase tracking-tight">
