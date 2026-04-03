@@ -1,24 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Plus, Minus, Send, ShoppingBag, Loader2 } from 'lucide-react';
 import { useCartStore } from "@/app/utils/store/useCartStore";
 import { ICartItem } from "@/app/utils/models/CartItem";
-import {createOrder} from "@/app/cart/actions";
-import {useRouter} from "next/navigation";
+import { createOrder } from "@/app/cart/actions";
 
 export default function CheckoutClient() {
     const { items, addItem, removeItem, clearCart } = useCartStore();
-    const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const getDiscountedTotal = (basePrice: number, quantity: number) => {
         if (quantity === 2) return Math.round(basePrice * 2 * 0.95);
         if (quantity >= 3) return Math.round(basePrice * quantity * 0.90);
         return basePrice * quantity;
     };
+
+    if (!isMounted) {
+        return null;
+    }
 
     if (items.length === 0) {
         return (
@@ -41,41 +50,37 @@ export default function CheckoutClient() {
         if (isSubmitting) return;
 
         setIsSubmitting(true);
-
-        // Use FormData directly from e.currentTarget
-        const formData = new FormData(e.currentTarget);
+        const fd = new FormData(e.currentTarget);
 
         const formDataObj = {
-            full_name: formData.get('full_name') as string,
-            phone: formData.get('phone') as string,
-            city: formData.get('city') as string,
-            zip_code: formData.get('zip_code') as string,
-            address: formData.get('address') as string,
-            email: formData.get('email') as string,
-            note: formData.get('note') as string,
+            full_name: fd.get('full_name') as string,
+            phone: fd.get('phone') as string,
+            city: fd.get('city') as string,
+            zip_code: fd.get('zip_code') as string,
+            address: fd.get('address') as string,
+            email: fd.get('email') as string,
+            note: fd.get('note') as string,
         };
 
         try {
-            // Ensure total - shipping is passed correctly
-            const result = await createOrder(formDataObj, items, subtotal);
+            const result = await createOrder(formDataObj, items, total - shipping);
 
             if (result.success) {
                 clearCart();
                 router.push('/hvala');
-                router.refresh();
             } else {
                 alert("Greška: " + result.message);
             }
         } catch (error) {
-            console.error("Submission error:", error);
-            alert("Došlo je do greške. Proverite internet konekciju i pokušajte ponovo.");
+            alert("Došlo je do neočekivane greške pri slanju porudžbine.");
+            console.error(error);
         } finally {
             setIsSubmitting(false);
         }
     };
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-start max-w-7xl mx-auto px-4 py-10">
-            {/* LEVA STRANA - FORMA */}
             <div className="lg:col-span-7">
                 <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-sm shadow-gray-200/50">
                     <h2 className="text-2xl font-black uppercase tracking-tighter mb-2">Informacije za dostavu</h2>
@@ -123,7 +128,6 @@ export default function CheckoutClient() {
                 </form>
             </div>
 
-            {/* DESNA STRANA - PREGLED KORPE */}
             <div className="lg:col-span-5 lg:sticky lg:top-10">
                 <div className="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100">
                     <h2 className="text-xl font-black uppercase mb-8 pb-4 border-b border-gray-200 flex items-center gap-2">
