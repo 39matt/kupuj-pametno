@@ -1,18 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 import AddToCartButton from './AddToCartButton';
 import { IProduct } from "@/app/utils/models/IProduct";
 
 export default function ProductBundle({ productInfo }: { productInfo: IProduct }) {
+    const [timeLeft, setTimeLeft] = useState({ hours: 12, minutes: 51, seconds: 31 });
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev.seconds > 0) {
+                    return { ...prev, seconds: prev.seconds - 1 };
+                } else if (prev.minutes > 0) {
+                    return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+                } else if (prev.hours > 0) {
+                    return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+                }
+                return prev;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (value: number) => value.toString().padStart(2, '0');
+
     const options = [
         {
             id: 1,
             title: 'Kupi 1 komad',
             quantity: 1,
             price: productInfo.price,
-            oldPrice: productInfo.price + 1500
+            oldPrice: productInfo.price + 1500,
+            discount: ''
         },
         {
             id: 2,
@@ -37,18 +59,18 @@ export default function ProductBundle({ productInfo }: { productInfo: IProduct }
 
     return (
         <div className="w-full font-sans my-6">
-            {/* Tajmer sekcija */}
-            <div className="bg-[#F5A623] text-white flex items-center justify-center gap-2 py-2 rounded-t-xl font-black text-sm uppercase">
-                Akcija traje još 12:51:31 <Clock size={16} fill="currentColor" className="text-[#F5A623] bg-white rounded-full p-0.5" />
+            <div className="bg-[#F5A623] text-white flex items-center justify-center gap-2 py-2.5 rounded-t-xl font-black text-sm uppercase">
+                Akcija traje još {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
+                <Clock size={16} fill="currentColor" className="text-[#F5A623] bg-white rounded-full p-0.5 ml-1" />
             </div>
 
-            <div className="border-2 border-t-0 border-[#F5A623]/30 rounded-b-xl overflow-hidden bg-white shadow-sm">
+            <div className="border-2 border-t-0 border-[#F5A623]/30 rounded-b-xl overflow-hidden bg-white shadow-sm mb-6">
                 {options.map((option) => (
                     <div
                         key={option.id}
                         onClick={() => setSelectedId(option.id)}
                         className={`p-4 cursor-pointer flex justify-between items-center transition-colors ${
-                            selectedId === option.id ? 'bg-[#FFF9F0]' : 'hover:bg-gray-50'
+                            selectedId === option.id ? 'bg-[#FFF9F0]' : 'hover:bg-gray-50 border-b border-gray-100 last:border-0'
                         }`}
                     >
                         <div className="flex items-center gap-3">
@@ -59,7 +81,9 @@ export default function ProductBundle({ productInfo }: { productInfo: IProduct }
                             </div>
                             <div>
                                 <h4 className="font-bold text-gray-900">{option.title}</h4>
-                                <p className="text-[#FF181A] text-sm font-extrabold">{option.discount}</p>
+                                {option.discount && (
+                                    <p className="text-[#FF181A] text-[11px] md:text-xs font-extrabold mt-0.5">{option.discount}</p>
+                                )}
                             </div>
                         </div>
 
@@ -75,6 +99,7 @@ export default function ProductBundle({ productInfo }: { productInfo: IProduct }
                 ))}
             </div>
 
+            {/* DUGME ZA KORPU */}
             <AddToCartButton
                 item={{
                     id: productInfo.id,
@@ -85,6 +110,7 @@ export default function ProductBundle({ productInfo }: { productInfo: IProduct }
                 }}
                 text={`DODAJ U KORPU — ${current.price.toLocaleString()} RSD`}
             />
+
         </div>
     );
 }

@@ -127,21 +127,75 @@ export default async function ProductPage({ params }: PageProps) {
                         Iskustva naših korisnika
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[1, 2, 3].map((item) => (
-                            <div key={item} className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/10">
-                                <div className="flex items-center gap-1 text-yellow-400 mb-4">
-                                    {[...Array(5)].map((_, i) => <Star key={i} fill="currentColor" size={14} />)}
+                        {[
+                            {
+                                id: 1,
+                                text: "Proizvod je stigao sutradan, upakovan savršeno. Kvalitet je opravdao svako ulaganje. Kupovaću ovde ponovo!",
+                                name: "Marko M.",
+                                initial: "M",
+                                rating: 5
+                            },
+                            {
+                                id: 2,
+                                text: "Odlična komunikacija sa prodavcem. Paket je stigao brzo, a proizvod radi tačno onako kako je i opisano. Sve preporuke!",
+                                name: "Jelena T.",
+                                initial: "J",
+                                rating: 5
+                            },
+                            {
+                                id: 3,
+                                text: "Jako sam zadovoljan kupovinom. Cena je više nego korektna za ovaj nivo kvaliteta. Mali minus za kurira koji je kasnio, ali to nije do vas.",
+                                name: "Nikola S.",
+                                initial: "N",
+                                rating: 4
+                            }
+                        ].map((review) => {
+                            // Funkcija za dodeljivanje boje na osnovu inicijala
+                            const getAvatarColor = (initial: string) => {
+                                const colors = [
+                                    'bg-[#FF181A]', // Crvena (originalna)
+                                    'bg-[#2ECC71]', // Zelena
+                                    'bg-[#3498DB]', // Plava
+                                    'bg-[#9B59B6]', // Ljubičasta
+                                    'bg-[#F1C40F]', // Žuta
+                                    'bg-[#E67E22]', // Narandžasta
+                                ];
+                                // Jednostavan "hash" na osnovu slova da uvek dobijemo istu boju za isto slovo
+                                const charCode = initial.charCodeAt(0);
+                                return colors[charCode % colors.length];
+                            };
+
+                            return (
+                                <div key={review.id} className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/10 flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex items-center gap-1 mb-4">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star
+                                                    key={i}
+                                                    fill="currentColor"
+                                                    size={14}
+                                                    className={i < review.rating ? "text-yellow-400" : "text-white/20"}
+                                                />
+                                            ))}
+                                        </div>
+                                        <p className="text-gray-200 text-lg italic mb-6">
+                                            "{review.text}"
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        {/* Dodaćemo dinamičku klasu boje ovde */}
+                                        <div className={`w-10 h-10 ${getAvatarColor(review.initial)} rounded-full flex items-center justify-center font-bold text-white text-xl`}>
+                                            {review.initial}
+                                        </div>
+                                        <span className="text-sm font-bold uppercase tracking-widest text-gray-400">
+                            {review.name}
+                        </span>
+                                    </div>
                                 </div>
-                                <p className="text-gray-200 text-lg italic mb-6">Proizvod je stigao sutradan, upakovan savršeno. Kvalitet je opravdao svako ulaganje. Kupovaću ovde ponovo!</p>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-[#FF181A] rounded-full flex items-center justify-center font-bold">M</div>
-                                    <span className="text-sm font-bold uppercase tracking-widest text-gray-400">Marko M.</span>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
-
                 {/* POVEZANI PROIZVODI */}
                 <div>
                     <h2 className="text-2xl font-black text-center mb-10 uppercase tracking-tight">Možda će vas zanimati</h2>
