@@ -1,9 +1,9 @@
 'use server';
 
+import { revalidatePath } from "next/cache";
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { createClient } from '@/app/utils/supabase/server';
-import {revalidatePath} from "next/cache";
 
-// Tip za podatke iz forme
 interface OrderFormData {
     full_name: string;
     phone: string;
@@ -14,7 +14,6 @@ interface OrderFormData {
     note?: string;
 }
 
-// Tip za stavku u korpi (prilagodi svojim poljima)
 interface CartItem {
     id: string | number;
     name: string;
@@ -23,7 +22,6 @@ interface CartItem {
     image?: string;
 }
 
-// Tip za odgovor akcije
 interface ActionResponse {
     success: boolean;
     message: string;
@@ -35,10 +33,14 @@ export async function createOrder(
     cartItems: CartItem[],
     total: number
 ): Promise<ActionResponse> {
-    const supabase = await createClient();
+
+    const supabaseAdmin = createAdminClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     try {
-        const { data } = await supabase
+        const { data, error } = await supabaseAdmin
             .from('orders')
             .insert([{
                 customer_name: formDataObj.full_name,
@@ -47,12 +49,19 @@ export async function createOrder(
                 city: formDataObj.city,
                 zip_code: formDataObj.zip_code,
                 email: formDataObj.email,
-                items: cartItems, // JSONB kolona prihvata niz objekata
+                items: cartItems,
                 total_price: total,
                 note: formDataObj.note || ""
             }])
             .select('id')
             .single();
+
+        if (error) {
+            return {
+                success: false,
+                message: error.message
+            };
+        }
 
         return {
             success: true,
@@ -61,12 +70,9 @@ export async function createOrder(
         };
 
     } catch (err: unknown) {
-        // Handle nepoznate greške bez 'any'
         const errorMessage = err instanceof Error
             ? err.message
             : "Došlo je do neočekivane greške pri kreiranju porudžbine.";
-
-        console.error("Order Creation Error:", err);
 
         return {
             success: false,
@@ -79,10 +85,14 @@ export async function updateOrderStatus(orderId: string, newStatus: string) {
     const supabase = await createClient();
 
     try {
-        await supabase
+        const { error } = await supabase
             .from('orders')
             .update({ status: newStatus })
             .eq('id', orderId);
+
+        if (error) {
+            return { success: false, message: error.message };
+        }
 
         revalidatePath('/admin');
         return { success: true, message: `Status promenjen u ${newStatus}` };
