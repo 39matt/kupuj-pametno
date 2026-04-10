@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { Check, ShoppingCart } from 'lucide-react';
-import {useCartStore} from "@/app/utils/store/useCartStore";
-import {ICartItem} from "@/app/utils/models/CartItem";
+import { useCartStore } from "@/app/utils/store/useCartStore";
+import { ICartItem } from "@/app/utils/models/CartItem";
 
 interface AddToCartButtonProps {
     item: ICartItem;
@@ -16,6 +16,17 @@ export default function AddToCartButton({ item, text }: AddToCartButtonProps) {
 
     const handleAdd = () => {
         addItem({ ...item, quantity: item.quantity });
+
+        if (typeof window !== 'undefined' && window.fbq) {
+            window.fbq('track', 'AddToCart', {
+                content_name: item.name,
+                content_ids: [item.id],
+                content_type: 'product',
+                value: item.price,
+                currency: 'RSD'
+            });
+        }
+
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
     };

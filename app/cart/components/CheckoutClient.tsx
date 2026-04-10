@@ -66,6 +66,18 @@ export default function CheckoutClient() {
             const result = await createOrder(formDataObj, items, total - shipping);
 
             if (result.success) {
+                // --- META PIXEL PURCHASE EVENT ---
+                if (typeof window !== 'undefined' && window.fbq) {
+                    window.fbq('track', 'Purchase', {
+                        value: total,
+                        currency: 'RSD',
+                        content_type: 'product',
+                        content_ids: items.map(item => item.id),
+                        num_items: items.length
+                    });
+                }
+                // ---------------------------------
+
                 clearCart();
                 router.push('/hvala');
             } else {
@@ -78,7 +90,6 @@ export default function CheckoutClient() {
             setIsSubmitting(false);
         }
     };
-
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-start max-w-7xl mx-auto px-4 py-10">
             <div className="lg:col-span-7">
