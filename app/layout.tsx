@@ -34,7 +34,7 @@ export default function RootLayout({
               s.parentNode.insertBefore(t,s)}(window, document,
               'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '1702110450341381');
+              fbq('init', '1222071759283044');
               fbq('track', 'PageView');
             `,
                 }}
@@ -44,7 +44,7 @@ export default function RootLayout({
                     height="1"
                     width="1"
                     style={{ display: "none" }}
-                    src="https://www.facebook.com/tr?id=1702110450341381&ev=
+                    src="https://www.facebook.com/tr?id=1222071759283044&ev=
             PageView&noscript=1"/>
             </noscript>
             <title>KupujPametno - Shop</title>
