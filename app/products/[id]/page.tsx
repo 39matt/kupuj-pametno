@@ -41,11 +41,6 @@ export default async function ProductPage({ params }: PageProps) {
                     <div className="flex flex-col gap-6">
                         {/* Galerija slika */}
                         <ProductGallery images={images} name={product.name} />
-
-                        {/* TrustUrgency ide OVDE (ispod slika) */}
-                        <div className="hidden md:block"> {/* Opciono: sakrij na mob ako je predugačko, ili ostavi */}
-                            <TrustUrgency />
-                        </div>
                     </div>
 
                     {/* DESNO: Informacije o kupovini */}
@@ -70,13 +65,11 @@ export default async function ProductPage({ params }: PageProps) {
                             </div>
                         </div>
 
+                         <TrustUrgency />
+
                         <ProductBundle
                             productInfo={product}
                         />
-
-                        <div className="md:hidden mt-6">
-                            <TrustUrgency />
-                        </div>
 
                         <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
                             <div className="flex items-center gap-3 text-gray-500 text-xs font-bold uppercase tracking-tight">
@@ -179,7 +172,7 @@ export default async function ProductPage({ params }: PageProps) {
                                             ))}
                                         </div>
                                         <p className="text-gray-200 text-lg italic mb-6">
-                                            "{review.text}"
+                                            {"\""}{review.text}{"\""}
                                         </p>
                                     </div>
                                     <div className="flex items-center gap-3">

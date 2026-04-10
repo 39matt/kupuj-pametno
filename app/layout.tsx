@@ -1,14 +1,17 @@
+'use client'
+
 import './globals.css';
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import React from "react";
-import {Inter, Montserrat} from "next/font/google"
+import {Montserrat} from "next/font/google"
+import dynamic from "next/dynamic";
 
-// const inter = Inter({ subsets: ['latin'] });
 const montserrat = Montserrat({
     subsets: ['latin'],
-    variable: '--font-montserrat', // Ovo ti omogućava da ga koristiš u Tailwind-u
+    variable: '--font-montserrat',
 });
+const PixelTracker = dynamic(() => import("./utils/pixel/PixelTracker"), { ssr: false });
 
 export default function RootLayout({
                                        children,
@@ -18,6 +21,7 @@ export default function RootLayout({
     return (
         <html lang="sr" className="light"  style={{ colorScheme: 'light' }}>
         <body className={`${montserrat.className} bg-slate-200 text-[#171717] antialiased`}>
+        <PixelTracker />
         <Header />
         {children}
         <Footer />
