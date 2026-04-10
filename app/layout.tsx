@@ -21,6 +21,7 @@ export default function RootLayout({
     return (
         <html lang="sr" className="light"  style={{ colorScheme: 'light' }}>
         <head>
+            <meta name="facebook-domain-verification" content="gdja0rfzcda2eibq5pwsvo0ln3uzuv" />
             <script
                 dangerouslySetInnerHTML={{
                     __html: `
