@@ -13,6 +13,7 @@ const montserrat = Montserrat({
 });
 const PixelTracker = dynamic(() => import("./utils/pixel/PixelTracker"), { ssr: false });
 
+
 export default function RootLayout({
                                        children,
                                    }: {

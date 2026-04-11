@@ -1,6 +1,13 @@
 import Hero from "@/app/components/Hero";
 import ProductCard from "@/app/components/ProductCard";
 import {createClient} from "@/app/utils/supabase/server";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Kupuj Pametno Shop - Najbolja online prodavnica',
+    description: 'Pronađi najbolje proizvode po najpovoljnijim cenama na Kupuj Pametno Shop-u.',
+    keywords: ['kupuj pametno', 'kupujpametno', 'online prodavnica', 'shop'],
+}
 
 
 export default async function Home() {
