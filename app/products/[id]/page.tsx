@@ -31,28 +31,38 @@ export default async function ProductPage({ params }: PageProps) {
 
     const images = product.imageUrls || [];
 
+    const price = product.price;
+    const oldPrice = product.oldPrice || product.old_price;
+
     return (
         <main className="bg-white min-h-screen">
             <div className="max-w-6xl mx-auto py-10 px-4 font-sans text-gray-900">
 
-                {/* HERO SEKCIJA */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-                    {/* LEVA KOLONA: Slike + TrustUrgency */}
                     <div className="flex flex-col gap-6">
-                        {/* Galerija slika */}
                         <ProductGallery images={images} name={product.name} />
                     </div>
 
-                    {/* DESNO: Informacije o kupovini */}
                     <div className="flex flex-col justify-start">
                         <div className="flex items-center gap-1 text-yellow-400 mb-4">
                             {[...Array(5)].map((_, i) => <Star key={i} fill="currentColor" size={18} />)}
                             <span className="text-gray-500 text-sm ml-2 font-medium">(24 ocene)</span>
                         </div>
 
-                        <h1 className="text-3xl md:text-4xl font-black mb-6 leading-tight uppercase tracking-tight text-black">
+                        <h1 className="text-3xl md:text-4xl font-black mb-2 leading-tight uppercase tracking-tight text-black">
                             {product.name}
                         </h1>
+
+                        <div className="flex items-baseline gap-3 mb-6">
+                            <span className="text-4xl font-black text-[#FF181A]">
+                                {price.toLocaleString()} RSD
+                            </span>
+                            {oldPrice && (
+                                <span className="text-xl text-gray-400 line-through decoration-gray-400/50">
+                                    {oldPrice.toLocaleString()} RSD
+                                </span>
+                            )}
+                        </div>
 
                         <div className="flex flex-col gap-3 mb-8">
                             <div className="flex items-center text-green-600 font-bold bg-green-50 w-max px-4 py-1.5 rounded-lg text-sm border border-green-100">
@@ -64,12 +74,12 @@ export default async function ProductPage({ params }: PageProps) {
                                 Cena dostave za sve porudžbine je 460 dinara.
                             </div>
                         </div>
-
-                         <TrustUrgency />
-
                         <ProductBundle
                             productInfo={product}
                         />
+                        <TrustUrgency />
+
+
 
                         <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
                             <div className="flex items-center gap-3 text-gray-500 text-xs font-bold uppercase tracking-tight">
@@ -84,7 +94,6 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                 </div>
 
-                {/* OPIS: FULL WIDTH (Vaš zahtev) */}
                 <div className="border-t border-gray-100 pt-20 mb-24">
                     <div className="flex items-center justify-center gap-3 mb-12">
                         <Info className="text-[#FF181A]" size={28} />
@@ -95,12 +104,10 @@ export default async function ProductPage({ params }: PageProps) {
 
                     <div className="max-w-4xl mx-auto">
                         <div className="bg-white rounded-3xl overflow-hidden">
-                            {/* Tekst preko cele širine */}
                             <p className="text-gray-700 text-xl whitespace-pre-wrap leading-relaxed mb-16 text-center md:text-left px-4">
                                 {product.description}
                             </p>
 
-                            {/* Velika slika detalja preko cele širine */}
                             <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
                                 <Image
                                     src={images[1] || images[0] || 'https://placehold.co/1200x500'}
@@ -114,7 +121,6 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                 </div>
 
-                {/* RECENZIJE */}
                 <div className="bg-black rounded-[2.5rem] p-10 md:p-16 mb-24 text-white">
                     <h2 className="text-3xl font-black text-center mb-12 uppercase tracking-tight">
                         Iskustva naših korisnika
@@ -143,17 +149,15 @@ export default async function ProductPage({ params }: PageProps) {
                                 rating: 4
                             }
                         ].map((review) => {
-                            // Funkcija za dodeljivanje boje na osnovu inicijala
                             const getAvatarColor = (initial: string) => {
                                 const colors = [
-                                    'bg-[#FF181A]', // Crvena (originalna)
-                                    'bg-[#2ECC71]', // Zelena
-                                    'bg-[#3498DB]', // Plava
-                                    'bg-[#9B59B6]', // Ljubičasta
-                                    'bg-[#F1C40F]', // Žuta
-                                    'bg-[#E67E22]', // Narandžasta
+                                    'bg-[#FF181A]',
+                                    'bg-[#2ECC71]',
+                                    'bg-[#3498DB]',
+                                    'bg-[#9B59B6]',
+                                    'bg-[#F1C40F]',
+                                    'bg-[#E67E22]',
                                 ];
-                                // Jednostavan "hash" na osnovu slova da uvek dobijemo istu boju za isto slovo
                                 const charCode = initial.charCodeAt(0);
                                 return colors[charCode % colors.length];
                             };
@@ -176,7 +180,6 @@ export default async function ProductPage({ params }: PageProps) {
                                         </p>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        {/* Dodaćemo dinamičku klasu boje ovde */}
                                         <div className={`w-10 h-10 ${getAvatarColor(review.initial)} rounded-full flex items-center justify-center font-bold text-white text-xl`}>
                                             {review.initial}
                                         </div>
@@ -189,7 +192,7 @@ export default async function ProductPage({ params }: PageProps) {
                         })}
                     </div>
                 </div>
-                {/* POVEZANI PROIZVODI */}
+
                 <div>
                     <h2 className="text-2xl font-black text-center mb-10 uppercase tracking-tight">Možda će vas zanimati</h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
