@@ -19,6 +19,7 @@ export default function RootLayout({
                                    }: {
     children: React.ReactNode
 }) {
+    return <div>Under maintenance</div>
     return (
         <html lang="sr" className="light"  style={{ colorScheme: 'light' }}>
         <head>
